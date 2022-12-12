@@ -38,7 +38,7 @@
           <h1 id="heading">Counter</h1>
           <h2 id="value">0</h2>
           <div class="buttons">
-            <button class="btn minus">Decerease</button>
+            <button class="btn minus" id="minus">Decerease</button>
             <button class="btn reset btn_reset">Reset</button
             ><button class="btn add">Increase</button>
           </div>
@@ -46,6 +46,13 @@
           <i><p id="time"></p></i>
           <!-- Show Alert -->
           <div id="snackbar"></div>
+          <i
+            ><small
+              ><b>*Note: </b>The counter value is saved on loca storage. If you
+              reset the counter, the counter value on the local storage will be
+              cleared!</small
+            ></i
+          >
         </div>
         <!-- The Modal -->
         <div id="myModal" class="modal">

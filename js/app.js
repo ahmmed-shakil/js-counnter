@@ -1,15 +1,23 @@
 // Take references
-let count = 0;
-const heading = document.getElementById("heading");
-const value = document.getElementById("value");
+let count = parseFloat(localStorage.getItem("count"));
+// getElement by id function
+function getElement(id) {
+  return document.getElementById(id);
+}
+// set color and bg
+function setColor(a, b, c, d) {
+  a.b.c = d;
+}
+const heading = getElement("heading");
+const value = getElement("value");
+value.textContent = count;
 const buttons = document.querySelectorAll(".btn");
-const animated = document.getElementById("animated_text");
-const nav = document.getElementById("nav");
-const docs = document.getElementById("docs");
-const footer = document.getElementById("footer");
-const modalNote = document.getElementById("modal-note");
-const timeStamp = document.getElementById("time");
-const date = new Date();
+const animated = getElement("animated_text");
+const nav = getElement("nav");
+const docs = getElement("docs");
+const footer = getElement("footer");
+const modalNote = getElement("modal-note");
+const timeStamp = getElement("time");
 // Get the modal
 const modal = document.getElementById("myModal");
 // Get the <span> element that closes the modal
@@ -79,11 +87,15 @@ window.onload = change;
 buttons.forEach(function (btn) {
   btn.addEventListener("click", function (e) {
     audio.play();
+    const date = new Date();
     const classes = e.currentTarget.classList;
     if (classes.contains("add")) {
       count = count + 1;
       timeStamp.textContent = `Counter value increased at ${date.toLocaleTimeString()}`;
     } else if (classes.contains("minus")) {
+      if (count <= 0) {
+        showSnackbar("The count value is negative");
+      }
       count--;
       timeStamp.textContent = `Counter value decreased at ${date.toLocaleTimeString()}`;
     } else {
@@ -91,21 +103,23 @@ buttons.forEach(function (btn) {
     }
     if (count < 0) {
       value.style.color = "red";
-      showSnackbar("The count value is negative");
     } else if (count > 0) {
       value.style.color = "green";
     } else if (count === 0) {
       value.style.color = "black";
     }
     value.textContent = count;
+    localStorage.setItem("count", count);
   });
 });
 // Confirm reset value
 confirmReset.onclick = function () {
+  const date = new Date();
   modal.style.display = "none";
   showSnackbar("Counter reset successful");
   timeStamp.textContent = `Counter was reset at ${date.toLocaleTimeString()}`;
   count = 0;
+  localStorage.removeItem("count");
   value.textContent = count;
 };
 
