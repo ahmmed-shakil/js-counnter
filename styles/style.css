@@ -99,6 +99,9 @@ main {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  box-shadow: 4px 4px 6px silver;
+  padding: 50px 0;
+  border: 2px solid black;
 }
 
 #heading {

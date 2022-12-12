@@ -8,7 +8,7 @@ const nav = document.getElementById("nav");
 const docs = document.getElementById("docs");
 const alertShow = document.getElementById("alert");
 const footer = document.getElementById("footer");
-console.log(buttons);
+const content = document.getElementById("content");
 
 // Change headng color
 let color = 0;
@@ -36,6 +36,7 @@ function changeColor() {
   nav.style.backgroundColor = colors[color];
   docs.style.backgroundColor = colors[color];
   docs.style.border = `1px solid white`;
+  content.style.border = `2px solid ${colors[color]}`;
   alertShow.style.backgroundColor = colors[color];
   footer.style.backgroundColor = colors[color];
 }
