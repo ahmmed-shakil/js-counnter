@@ -6,9 +6,31 @@ const buttons = document.querySelectorAll(".btn");
 const animated = document.getElementById("animated_text");
 const nav = document.getElementById("nav");
 const docs = document.getElementById("docs");
-const alertShow = document.getElementById("alert");
 const footer = document.getElementById("footer");
-const content = document.getElementById("content");
+const modalNote = document.getElementById("modal-note");
+const timeStamp = document.getElementById("time");
+const date = new Date();
+// Get the modal
+const modal = document.getElementById("myModal");
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+// Get the <span> element that confirms
+const confirmReset = document.getElementsByClassName("confirm")[0];
+
+function showSnackbar(text) {
+  // Get the snackbar DIV
+
+  const snackbar = document.getElementById("snackbar");
+
+  // Add the "show" class to DIV
+  snackbar.className = "show";
+  snackbar.innerText = text;
+
+  // After 3 seconds, remove the show class from DIV
+  setTimeout(function () {
+    snackbar.className = snackbar.className.replace("show", "");
+  }, 3000);
+}
 
 // Change headng color
 let color = 0;
@@ -36,10 +58,14 @@ function changeColor() {
   nav.style.backgroundColor = colors[color];
   docs.style.backgroundColor = colors[color];
   docs.style.border = `1px solid white`;
-  content.style.border = `2px solid ${colors[color]}`;
-  alertShow.style.backgroundColor = colors[color];
   footer.style.backgroundColor = colors[color];
+  snackbar.style.backgroundColor = colors[color];
+  modalNote.style.color = colors[color];
+  timeStamp.style.color = colors[color];
 }
+
+// Play Audio
+const audio = new Audio("https://www.fesliyanstudios.com/play-mp3/387");
 
 function change() {
   setInterval(function () {
@@ -52,28 +78,45 @@ window.onload = change;
 // Add functionality on buttons
 buttons.forEach(function (btn) {
   btn.addEventListener("click", function (e) {
+    audio.play();
     const classes = e.currentTarget.classList;
     if (classes.contains("add")) {
       count = count + 1;
-      alertShow.textContent = "";
+      timeStamp.textContent = `Counter value increased at ${date.toLocaleTimeString()}`;
     } else if (classes.contains("minus")) {
       count--;
+      timeStamp.textContent = `Counter value decreased at ${date.toLocaleTimeString()}`;
     } else {
-      count = count * 0;
-      alertShow.textContent = "Counter reset succesful";
-      alertShow.style.display = "block";
+      modal.style.display = "block";
     }
     if (count < 0) {
       value.style.color = "red";
-      alertShow.style.display = "block";
-      alertShow.textContent = "The count value is less than zero";
+      showSnackbar("The count value is negative");
     } else if (count > 0) {
       value.style.color = "green";
-      alertShow.style.display = "none";
-      alertShow.textContent = "";
     } else if (count === 0) {
       value.style.color = "black";
     }
     value.textContent = count;
   });
 });
+// Confirm reset value
+confirmReset.onclick = function () {
+  modal.style.display = "none";
+  showSnackbar("Counter reset successful");
+  timeStamp.textContent = `Counter was reset at ${date.toLocaleTimeString()}`;
+  count = 0;
+  value.textContent = count;
+};
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function () {
+  modal.style.display = "none";
+};
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function (event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+};
