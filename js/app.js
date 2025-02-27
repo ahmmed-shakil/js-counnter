@@ -1,5 +1,7 @@
 // Take references
-let count = parseFloat(localStorage.getItem("count"));
+let count = localStorage.getItem("count");
+count = count !== null && !isNaN(parseFloat(count)) ? parseFloat(count) : 0;
+
 // getElement by id function
 function getElement(id) {
   return document.getElementById(id);
